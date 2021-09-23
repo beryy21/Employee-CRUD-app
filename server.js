@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-const port = 3000;
+const port = 3001;
 
 //config
 app.use(cors());
@@ -11,14 +11,14 @@ app.use(express.urlencoded({extended: false}));
 
 //connect to mongodb
 mongoose.connect(
-  "mongodg+srv://berry:berry3010@cluster0.6yzyd.mongodb.net/employee?retywrites=true&w=majority"                                                                                                                         
+  "mongodb+srv://user:1234@cluster0.ujebg.mongodb.net/employee?retryWrites=true&w=majority"                                                                                                                         
 );
 
 //data schema
 const employeeSchema = {
     name:String,
     BirthDate:String,
-    Gender:CharacterData,
+    Gender:String,
     salary:String,
 };    
 
@@ -64,7 +64,7 @@ app.delete("/delete/:id", (req, res) => {
 app.put("/put/:id", (req, res) => {
     const updatedEmployee = {
         fullname: req.body.fullname,
-        BirthDate: req.body.BirthDate,
+        birthDate: req.body.birthDate,
         gender: req.body.gender,
         salary: req.body.salary
     }

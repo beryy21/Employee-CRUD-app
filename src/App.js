@@ -8,9 +8,17 @@ function App() {
     birthdate: "",
     gender: "",
     salary: "",
-    _id: "",
   },
   ]);
+  const [employees, setEmployee] = useState([
+  {
+    fullname: "",
+    birthdate: "",
+    gender: "",
+    salary: "",
+    _id:"",
+  },
+]);
 
   const [isPut, setIsPut] = useState(false);
   const [setUpdatedEmployee,updatedEmployee] = useState({
@@ -22,18 +30,19 @@ function App() {
   });
 
   useEffect(() => {
-    fetch("/employee").then((res) => {
+    fetch("/employees")
+    .then((res) => {
       if (res.ok) {
         return res.json();
       }
     })
       .then(jsonRes => setEmployees(jsonRes))
       .catch(err => console.log(err));
-  }, [employee]);
+  }, [employees]);
 
   function handleChange(event) {
     const { name, value } = event.target;
-    setEmployees(prevInput => {
+    setEmployee((prevInput) => {
       return {
         ...prevInput,
         [name]: value,
@@ -54,7 +63,7 @@ function App() {
     console.log(newEmployee);
     alert('employee added');
 
-    newEmployee({
+    setEmployee({
       fullname: "",
       birthdate: "",
       gender: "",
@@ -91,11 +100,12 @@ function App() {
         }
       )
     })
+    console.log(updatedEmployee);
   }
   return (
     <div className="App">
-      {!isPut ?
-        (<div className="main">
+      {!isPut ?(
+      <div className="main">
           <input
             onChange={handleChange}
             name="fullname"
@@ -121,8 +131,8 @@ function App() {
             placeholder="please enter your salary"
           ></input>
           <button onClick={addEmployee}>Add employee</button>
-        </div>) : 
-        (<div className="main2">
+        </div>) : (
+        <div className="main">
             <input
               onChange={handleUpdate}
               name="fullname"
@@ -150,7 +160,7 @@ function App() {
             <button onClick={() => updateEmployee(updatedEmployee.id)}>UPDATE employee</button>
           </div>
         )}
-      {employee.map((employee) => {
+      {employees.map((employee) => {
         return (
           <div
             key={employee.id}
